@@ -2,20 +2,29 @@
 
 FROM java:8
 
-MAINTAINER example@example.com
+MAINTAINER minecraft@h-r-l.co.uk
 
-# manual upgrades only chaps
+# manual upgrades (for now)
 # when you upgrade, you are responsible for removing the duplicate mods from your ./mods folder on your volume.
 ENV VERSION=3.0.8
 
-RUN apt-get update && apt-get install -y wget unzip
+VOLUME /data
+
+RUN sudo apt-get update && \
+    sudo apt-get install -y wget unzip && \
+    sudo apt-get clean && \
+    sudo apt-get -y autoremove && \
+    sudo apt-get -y clean && \
+    sudo rm -rf /var/lib/apt/lists/*
+    
 RUN adduser --disabled-password --home=/data --uid 1234 --gecos "minecraft user" minecraft
 
-RUN mkdir /tmp/ftb && cd /tmp/ftb && \
-  wget -c https://media.forgecdn.net/files/2570/735/SevTech_Ages_Server_${VERSION}.zip -O sevtech.zip && \
+RUN mkdir /data && cd /data && \
+    wget -c https://media.forgecdn.net/files/2570/735/SevTech_Ages_Server_${VERSION}.zip -O sevtech.zip && \
 	unzip sevtech.zip && \
-	chown -R minecraft /tmp/ftb && \
-	bash /tmp/ftb/Install.sh
+	rm sevtech.zip && \
+	chown -R minecraft /data && \
+	bash /data/Install.sh
 
 USER minecraft
 
@@ -23,8 +32,7 @@ EXPOSE 25565
 
 ADD start.sh /start
 
-VOLUME /data
-ADD server.properties /tmp/server.properties
+ADD server.properties /data/server.properties
 WORKDIR /data
 
 CMD /start

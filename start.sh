@@ -4,10 +4,10 @@ set -e
 
 cd /data
 
-cp -rf /tmp/ftb/* .
+# cp -rf /tmp/ftb/* .
 echo "eula=true" > eula.txt
 
-cp -rf /tmp/overrides/* .
+# cp -rf /tmp/overrides/* .
 
 if [[ ! -e server.properties ]]; then
     cp /tmp/server.properties .
@@ -30,6 +30,6 @@ if [[ -n "$WL" ]]; then
     echo $WL | awk -v RS=, '{print}' >> whitelist.txt
 fi
 
-sleep 20
+sleep 2
 
 bash ./ServerStart.sh
