@@ -8,8 +8,6 @@ MAINTAINER minecraft@h-r-l.co.uk
 # when you upgrade, you are responsible for removing the duplicate mods from your ./mods folder on your volume.
 ENV VERSION=3.0.8
 
-VOLUME /data
-
 RUN apt-get update && \
     apt-get install -y wget unzip && \
     apt-get clean && \
@@ -30,6 +28,8 @@ USER minecraft
 EXPOSE 25565
 
 ADD start.sh /start
+
+VOLUME /data
 
 ADD server.properties /data/server.properties
 WORKDIR /data
