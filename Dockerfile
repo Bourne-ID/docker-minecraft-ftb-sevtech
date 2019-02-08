@@ -10,17 +10,16 @@ ENV VERSION=3.0.8
 
 VOLUME /data
 
-RUN sudo apt-get update && \
-    sudo apt-get install -y wget unzip && \
-    sudo apt-get clean && \
-    sudo apt-get -y autoremove && \
-    sudo apt-get -y clean && \
-    sudo rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y wget unzip && \
+    apt-get clean && \
+    apt-get -y autoremove && \
+    apt-get -y clean && \
+    rm -rf /var/lib/apt/lists/*
     
 RUN adduser --disabled-password --home=/data --uid 1234 --gecos "minecraft user" minecraft
 
-RUN mkdir /data && cd /data && \
-    wget -c https://media.forgecdn.net/files/2570/735/SevTech_Ages_Server_${VERSION}.zip -O sevtech.zip && \
+RUN cd /data/ && wget -c https://media.forgecdn.net/files/2570/735/SevTech_Ages_Server_${VERSION}.zip -O sevtech.zip && \
 	unzip sevtech.zip && \
 	rm sevtech.zip && \
 	chown -R minecraft /data && \
