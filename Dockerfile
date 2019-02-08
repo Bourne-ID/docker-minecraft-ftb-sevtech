@@ -39,3 +39,4 @@ CMD /start
 ENV MOTD Sevtech ${VERSION} CAVEMAN on docker
 ENV JVM_OPTS -Xms4096m -Xmx4096m
 ENV FLIGHT true
+
